@@ -2,8 +2,5 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "debian/bullseye64"
-  config.ssh.insert_key = false
-
-  config
+  config.vm.box = "debian/bookworm64"
 end

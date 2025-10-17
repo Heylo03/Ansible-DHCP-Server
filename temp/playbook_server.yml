@@ -1,0 +1,58 @@
+- name: Configurar el servidor DHCP
+  hosts: dhcp_server
+  become: yes
+  tasks:
+
+    - name: Instalar el servidor DHCP
+      apt:
+        name: isc-dhcp-server
+        state: present
+        update_cache: yes
+
+    - name: Configurar la interfaz de escucha del DHCP
+      lineinfile:
+        path: /etc/default/isc-dhcp-server
+        regexp: '^INTERFACESv4='
+        line: 'INTERFACESv4="eth1"' 
+
+    - name: Hacer copia de seguridad del archivo de configuración
+      copy:
+        src: /etc/dhcp/dhcpd.conf
+        dest: /etc/dhcp/dhcpd.conf.bak
+        remote_src: yes
+
+    - name: Escribir archivo de configuración dhcpd.conf
+      copy:
+        dest: /etc/dhcp/dhcpd.conf
+        content: |
+          default-lease-time 86400;
+          max-lease-time 691200;
+          authoritative;
+
+          subnet 192.168.57.0 netmask 255.255.255.0 {
+            range 192.168.57.25 192.168.57.50;
+            option routers 192.168.57.10;
+            option broadcast-address 192.168.57.255;
+            option domain-name-servers 8.8.8.8, 4.4.4.4;
+            option domain-name "micasa.es";
+          }
+
+          host c2 {
+            hardware ethernet 08:00:27:aa:bb:cc;
+            fixed-address 192.168.57.4;
+            option domain-name-servers 1.1.1.1;
+            default-lease-time 3600;
+          }
+
+    - name: Reiniciar el servicio DHCP
+      service:
+        name: isc-dhcp-server
+        state: restarted
+        enabled: yes
+
+    - name: Verificar que el servicio DHCP esté escuchando en UDP
+      shell: ss -lun | grep 67
+      register: dhcp_udp_check
+
+    - debug:
+        var: dhcp_udp_check.stdout_lines
