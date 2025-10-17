@@ -1,0 +1,16 @@
+vagrant init -m debian/bookworm64
+
+vagrant ssh-config
+
+ansible default -i hosts -m ping
+ansible default -m command -a uptime
+ansible default -b -a "tail /var/log/syslog"
+ansible default -b -m apt -a name=nginx
+ansible default -b -a "apt update"
+cp ~/.vagrant.d/insecure_private_key .
+ansible-playbook playbook.yml
+
+TAREA: INTEGRARLE PLAYBOOK AL VAGRANT
+
+pass: pablo 
+yes

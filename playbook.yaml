@@ -1,0 +1,10 @@
+---
+- name: Intro to playbooks
+  hosts: all
+
+  tasks:
+    - name: Install Nginx
+      ansible.builtin.apt:
+        name: nginx
+        update_cache: true
+      become: true
