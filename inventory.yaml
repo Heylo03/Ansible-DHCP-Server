@@ -1,15 +1,10 @@
----
 laboratory:
   hosts:
     server:
       ansible_host: 192.168.57.10
-      ansible_port: 2222
     c1:
-      ansible_host: 192.168.56.1
-      ansible_port: 2201
+      ansible_host: 192.168.57.20
     c2:
-      ansible_host: 192.168.56.2
-      ansible_port: 2202
-
+      ansible_host: 192.168.57.21
   vars:
     ansible_user: vagrant
