@@ -10,7 +10,19 @@ ansible default -b -a "apt update"
 cp ~/.vagrant.d/insecure_private_key .
 ansible-playbook playbook.yml
 
-TAREA: INTEGRARLE PLAYBOOK AL VAGRANT
+vagrant up
+
+
+ansible all -m ping
+
+ansible-playbook dhcp-playbook.yml
+
+sudo systemctl status isc-dhcp-server
+sudo cat /etc/dhcp/dhcpd.conf
+
+ip a
+cat /etc/resolv.conf
+
 
 pass: pablo 
 yes
