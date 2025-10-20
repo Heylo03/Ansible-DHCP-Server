@@ -9,7 +9,7 @@ Vagrant.configure("2") do |cfg|
     server.vm.hostname = "dhcp-server"
     server.vm.network :private_network, ip: "192.168.57.10"
     server.vm.provision :ansible do |ansible|
-      ansible.playbook = "dhcp-playbook.yml"
+      ansible.playbook = "dhcp-playbook.yaml"
     end
   end
 

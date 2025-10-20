@@ -15,7 +15,7 @@ vagrant up
 
 ansible all -m ping
 
-ansible-playbook dhcp-playbook.yml
+ansible-playbook dhcp-playbook.yaml
 
 sudo systemctl status isc-dhcp-server
 sudo cat /etc/dhcp/dhcpd.conf

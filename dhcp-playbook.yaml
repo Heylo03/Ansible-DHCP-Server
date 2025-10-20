@@ -38,8 +38,10 @@
             default-lease-time 3600;
           }
 
-    - name: Restart and enable DHCP service
-      service:
-        name: isc-dhcp-server
-        state: restarted
-        enabled: yes
+    - name: Set DHCP server interface
+      lineinfile:
+        path: /etc/default/isc-dhcp-server
+        regexp: '^INTERFACESv4='
+        line: 'INTERFACESv4="enp0s8"'
+        create: yes
+
